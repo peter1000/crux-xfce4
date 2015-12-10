@@ -1,0 +1,15 @@
+# Depends on: intltool libxfce4util gtk libxfce4ui
+
+name=garcon
+version=0.4.0
+release=1
+source=(http://archive.xfce.org/xfce/4.12/src/$name-$version.tar.bz2)
+
+build() {
+	cd $name-$version
+	sed -i -r -e '/^[[:space:]]+po/d' Makefile.in
+	./configure --prefix=/usr
+	make
+	make DESTDIR=$PKG install
+	rm -r $PKG/usr/share/gtk-doc
+}
